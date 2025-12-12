@@ -17,4 +17,12 @@ public class CourseCatalog {
       return this.courses;
    }
    
+   public void listCourses() {
+      System.out.println("Available Courses:");
+
+      for(int var1 = 0; var1 < this.courses.size(); ++var1) {
+         System.out.println(var1 + 1 + ". " + String.valueOf(this.courses.get(var1)));
+      }
+
+   }
 }
