@@ -24,4 +24,26 @@ public class Student implements Registrable {
     public String getId(){ return id; }
 
     public Map<String, Course> getDailyCourses(){ return dailyCourses; }
+
+    public void removeCourse(String day){
+        Course removed = dailyCourses.remove(day);
+        selectedInstructors.remove(day);
+        if(removed != null){
+            grades.remove(removed);
+        }
+    }
+
+    public boolean hasSameDayConflict(String day, Course newCourse){
+        Course existing = dailyCourses.get(day);
+        if(existing == null) return false;
+        return existing.getTimeSlot().equals(newCourse.getTimeSlot());
+    }
+
+    public boolean setCourse(String day, Course courses){
+        if(hasSameDayConflict(day, courses)){
+            return false;
+        }
+        dailyCourses.put(day, courses);
+        return true;
+    }
 }
