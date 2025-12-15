@@ -7,7 +7,7 @@ public class Student implements Registrable {
     private String id;
     private boolean registered = false;
 
-    private Map<String,Course>dailyCourses =new LinkedHashMap<>();
+    private Map<String,Course> dailyCourses =new LinkedHashMap<>();
 
     private Map<String, String> selectedInstructors = new LinkedHashMap<>();
 
@@ -18,4 +18,10 @@ public class Student implements Registrable {
         this.surname=surname;
         this.id=id;
     }
+
+    public String getName(){ return name; }
+    public String getSurname(){ return surname; }
+    public String getId(){ return id; }
+
+    public Map<String, Course> getDailyCourses(){ return dailyCourses; }
 }
