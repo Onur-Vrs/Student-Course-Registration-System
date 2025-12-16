@@ -5,11 +5,11 @@ public class Student implements Registrable {
     private String name;
     private String surname;
     private String id;
-    private boolean registered = false;
+    private boolean registered;
 
     private Map<String,Course> dailyCourses =new LinkedHashMap<>();
 
-    private Map<String, String> selectedInstructors = new LinkedHashMap<>();
+    private Map<String, String> instructors = new LinkedHashMap<>();
 
     private Map<Course, Double> grades = new LinkedHashMap<>();
 
@@ -32,6 +32,8 @@ public class Student implements Registrable {
         Course existing = dailyCourses.get(day);
         if(existing != null && existing.getTimeSlot().equals(c.getTimeSlot()))
             return false;
+        dailyCourses.put(day,c);
+        return true;
     }
 
     public void removeCourse(String day){
@@ -39,13 +41,17 @@ public class Student implements Registrable {
         instructors.remove(day);
         if(c != null) grades.remove(c);
         }
-    }
 
     public boolean setInstructor(String day,String name){
-        Course c = dailyCourses.get(day);
-        if(c==null) return false;
-        if(!c.hasIns)
+       Course c = dailyCourses.get(day);
+       if(c==null) return false;
+       if(!c.hasInstructor(name)) return false;
+       instructors.put(day, name);
+       return true;
     }
 
+    public String getInstructor(String day){
+        return instructors.getOrDefault(day, "No");
+    }
     
 }

@@ -22,7 +22,7 @@ public class Course {
     public List<String> getInstructors() { return instructors; }
     public String getTimeSlot() { return timeSlot; }
 
-    public boolean hasInstuctor(String name){
+    public boolean hasInstructor(String name){
         return instructors.contains(name);
     }
 
