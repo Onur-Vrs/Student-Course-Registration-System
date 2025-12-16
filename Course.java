@@ -22,6 +22,10 @@ public class Course {
     public List<String> getInstructors() { return instructors; }
     public String getTimeSlot() { return timeSlot; }
 
+    public boolean hasInstuctor(String name){
+        return instructors.contains(name);
+    }
+
     @Override
     public String toString() {
         return courseName + " (" + courseNumber + ") - Credit: " + credit

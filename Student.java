@@ -14,6 +14,9 @@ public class Student implements Registrable {
     private Map<Course, Double> grades = new LinkedHashMap<>();
 
     public Student(String name,String surname,String id){
+        if(!id.matches("\\d{9}"))
+            throw new IllegalArgumentException("ID 9 haneli olmalı!");
+
         this.name=name;
         this.surname=surname;
         this.id=id;
@@ -25,25 +28,24 @@ public class Student implements Registrable {
 
     public Map<String, Course> getDailyCourses(){ return dailyCourses; }
 
-    public void removeCourse(String day){
-        Course removed = dailyCourses.remove(day);
-        selectedInstructors.remove(day);
-        if(removed != null){
-            grades.remove(removed);
-        }
-    }
-
-    public boolean hasSameDayConflict(String day, Course newCourse){
+    public boolean setCourse(String day, Course c){
         Course existing = dailyCourses.get(day);
-        if(existing == null) return false;
-        return existing.getTimeSlot().equals(newCourse.getTimeSlot());
+        if(existing != null && existing.getTimeSlot().equals(c.getTimeSlot()))
+            return false;
     }
 
-    public boolean setCourse(String day, Course courses){
-        if(hasSameDayConflict(day, courses)){
-            return false;
+    public void removeCourse(String day){
+        Course c = dailyCourses.remove(day);
+        instructors.remove(day);
+        if(c != null) grades.remove(c);
         }
-        dailyCourses.put(day, courses);
-        return true;
     }
+
+    public boolean setInstructor(String day,String name){
+        Course c = dailyCourses.get(day);
+        if(c==null) return false;
+        if(!c.hasIns)
+    }
+
+    
 }
