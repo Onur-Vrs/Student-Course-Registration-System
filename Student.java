@@ -76,5 +76,13 @@ public class Student implements Registrable {
             sum +=c.getCredit();
         return sum;
     }
-    
+
+    public int calculateTuition(){ return getTotalCredit()*1000; }
+
+    @Override
+    public boolean isRegistered(){ return registered; }
+
+    @Override
+    public void setRegistered(boolean r){ registered = r; }
+
 }
