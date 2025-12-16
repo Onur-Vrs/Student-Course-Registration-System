@@ -54,4 +54,27 @@ public class Student implements Registrable {
         return instructors.getOrDefault(day, "No");
     }
     
+    public void setGrade(Course c, double grade){
+        if(dailyCourses.containsValue(c))
+            grades.put(c,grade);
+    }
+
+    public double calculateGPA(){
+        double total =0;
+        int credits = 0;
+
+        for(Map.Entry<Course,Double>e : grades.entrySet()){
+            total+= e.getKey().getCredit()*e.getValue();
+            credits += e.getKey().getCredit();
+        }
+        return credits == 0?0: total/ credits;
+    }
+
+    public int getTotalCredit(){
+        int sum = 0;
+        for(Course c : dailyCourses.values())
+            sum +=c.getCredit();
+        return sum;
+    }
+    
 }
