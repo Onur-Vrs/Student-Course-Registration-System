@@ -85,11 +85,8 @@ public class Student implements Registrable {
     }
 
     public int calculateTuition(){ return getTotalCredit()*1000; }
-
-    @Override
-    public boolean isRegistered(){ return registered; }
-
-    @Override
-    public void setRegistered(boolean r){ registered = r; }
+    public String getStudentType() {return "No"; }
+    @Override public boolean isRegistered(){ return registered; }
+    @Override public void setRegistered(boolean r){ registered = r; }
 
 }
