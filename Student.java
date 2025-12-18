@@ -1,5 +1,7 @@
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Student implements Registrable {
     private String name;
@@ -8,10 +10,15 @@ public class Student implements Registrable {
     private boolean registered;
 
     private Map<String,Course> dailyCourses =new LinkedHashMap<>();
-
     private Map<String, String> instructors = new LinkedHashMap<>();
-
     private Map<Course, Double> grades = new LinkedHashMap<>();
+    static Scanner sc = new Scanner(System.in);
+    static Map<String, Student> students = new HashMap<>();
+
+    static {
+        SaveCSV.loadFromCSV();
+        students = SaveCSV.students;
+    }
 
     public Student(String name,String surname,String id){
         if(!id.matches("\\d{9}"))
