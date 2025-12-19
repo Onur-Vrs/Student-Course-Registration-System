@@ -51,7 +51,8 @@ public class SaveCSV {
         } catch(IOException e){
             e.printStackTrace();
         }
-
+    }
+    
         static void loadFromCSV(){
             if(!file.exists()) return;
 
@@ -74,7 +75,7 @@ public class SaveCSV {
                 e.printStackTrace();
             }
         }
-    }
+    
 }
 
 
