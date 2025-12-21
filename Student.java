@@ -96,6 +96,21 @@ public class Student implements Registrable {
         }
     }
 
+    static void editStudent(){
+        System.out.print("Student ID"); String targetId = sc.nextLine();
+        Student s = students.get(targetId);
+        if(s==null){
+            System.out.println("Student not found!");
+            return;
+        }
+
+        Course.courseSelection(s);
+        Course.gradeEntry(s);
+        System.out.println("Student profile updated!");
+        SaveCSV.saveToCSV();
+    }
+
+    
     public double calculateGPA(){
         double total =0;
         int credits = 0;
