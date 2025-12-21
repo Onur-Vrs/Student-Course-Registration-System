@@ -66,6 +66,36 @@ public class Student implements Registrable {
             grades.put(c,grade);
     }
 
+    static void addStudent(){
+        System.out.print("Name:"); String n = sc.nextLine();
+        System.out.print("Surname:"); String s = sc.nextLine();
+        System.out.print("ID:"); String id = sc.nextLine();
+
+        if(students.containsKey(id)){
+            System.out.println("This ID already recorded!!");
+            return;
+        }
+
+        System.out.print("Graduate student? (y/n): "); String g = sc.nextLine();
+        
+
+        try {
+            Student st = g.equalsIgnoreCase("y")
+                ? new GraduateStudent(n, s, id)
+                : new Student(n, s, id);
+            
+            Course.courseSelection(st);
+            Course.gradeEntry(st);
+
+            st.setRegistered(true);
+            students.put(id, st);
+            System.out.println("Student Recorded!");
+            SaveCSV.saveToCSV();
+        } catch (Exception e) {
+            System.out.println("ERROR: " + e.getMessage());
+        }
+    }
+
     public double calculateGPA(){
         double total =0;
         int credits = 0;
