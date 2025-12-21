@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -110,7 +111,32 @@ public class Student implements Registrable {
         SaveCSV.saveToCSV();
     }
 
-    
+    static void deleteStudent(){
+        System.out.print("ID to be deleted");
+        Student removed = students.remove(sc.nextLine());
+        if(removed==null){
+            System.out.println("ID not found!");
+        } else {
+            System.out.println("ID deleted!");
+        }
+    }
+
+    static void listStudents(){
+        if(students.isEmpty()){
+            System.out.println("No records found!");
+            return;
+        }
+
+        for(Student s : students.values()){
+            System.out.println(
+                s.getName() + " " + s.getSurname()+
+                " | ID: "+ s.getId() +
+                " | Graduate: " + s.getStudentType() +
+                " | GPA: " + String.format(Locale.US, "%.2f", s.calculateGPA())
+            );
+        }
+    }
+
     public double calculateGPA(){
         double total =0;
         int credits = 0;
