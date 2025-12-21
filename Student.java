@@ -23,7 +23,7 @@ public class Student implements Registrable {
 
     public Student(String name,String surname,String id){
         if(!id.matches("\\d{9}"))
-            throw new IllegalArgumentException("ID 9 haneli olmalı!");
+            throw new IllegalArgumentException("ID must be 9 digits!");
 
         this.name=name;
         this.surname=surname;

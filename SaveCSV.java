@@ -15,7 +15,7 @@ public class SaveCSV {
 
     static void saveToCSV(){
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(file))){
-            bw.write("Name,Surname,ID,Graduate,Tuition,"+"Monday,Tuesday,Wednesday,Thursday,Friday");
+            bw.write("Name,Surname,ID,Graduate,Tuition,"+"Monday,Tuesday,Wednesday,Thursday,Friday,GPA");
             bw.newLine();
 
             for(Student s : students.values()){
