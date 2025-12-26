@@ -1,3 +1,5 @@
+
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -33,6 +35,19 @@ public class Student implements Registrable {
     public String getName(){ return name; }
     public String getSurname(){ return surname; }
     public String getId(){ return id; }
+    public Map<Course, Double> getGrades() {
+    return grades;
+}
+
+    public void setName(String name) {
+    this.name = name;
+}
+
+public void setSurname(String surname) {
+    this.surname = surname;
+}
+
+
 
     public Map<String, Course> getDailyCourses(){ return dailyCourses; }
 
@@ -67,49 +82,133 @@ public class Student implements Registrable {
             grades.put(c,grade);
     }
 
-    static void addStudent(){
-        System.out.print("Name:"); String n = sc.nextLine();
-        System.out.print("Surname:"); String s = sc.nextLine();
-        System.out.print("ID:"); String id = sc.nextLine();
+    static void addStudent() {
 
-        if(students.containsKey(id)){
-            System.out.println("This ID already recorded!!");
-            return;
+    String n;
+    while (true) {
+        System.out.print("Name: ");
+        n = sc.nextLine();
+
+        if (n.isEmpty()) {
+            System.out.println("Name must be entered!");
+            continue;
         }
 
-        System.out.print("Graduate student? (y/n): "); String g = sc.nextLine();
-        
-
-        try {
-            Student st = g.equalsIgnoreCase("y")
-                ? new GraduateStudent(n, s, id)
-                : new Student(n, s, id);
-            
-            Course.courseSelection(st);
-            Course.gradeEntry(st);
-
-            st.setRegistered(true);
-            students.put(id, st);
-            System.out.println("Student Recorded!");
-            SaveCSV.saveToCSV();
-        } catch (Exception e) {
-            System.out.println("ERROR: " + e.getMessage());
+        if (!n.matches("\\p{L}+")) {
+            System.out.println("Name can only contain letters!");
+            continue;
         }
+        break;
     }
 
-    static void editStudent(){
-        System.out.print("Student ID"); String targetId = sc.nextLine();
-        Student s = students.get(targetId);
-        if(s==null){
-            System.out.println("Student not found!");
-            return;
+    String s;
+    while (true) {
+        System.out.print("Surname: ");
+        s = sc.nextLine().trim();
+
+        if (s.isEmpty()) {
+            System.out.println("Surname must be entered!");
+            continue;
         }
 
-        Course.courseSelection(s);
-        Course.gradeEntry(s);
-        System.out.println("Student profile updated!");
-        SaveCSV.saveToCSV();
+        if (!s.matches("\\p{L}+")) {
+            System.out.println("Surname can only contain letters!");
+            continue;
+        }
+        break;
     }
+
+    String id;
+    while(true){
+    System.out.print("ID: ");
+    id = sc.nextLine();
+
+    if (!id.matches("\\d{9}")) {
+        System.out.println("ID must be exactly 9 digits!");
+        continue;
+    }
+
+    if (students.containsKey(id)) {
+        System.out.println("This ID already recorded!");
+        continue;
+    }
+    break;
+    }
+
+    System.out.print("Graduate student? (y/n): ");
+    String g = sc.nextLine();
+
+    Student st = g.equalsIgnoreCase("y")
+            ? new GraduateStudent(n, s, id)
+            : new Student(n, s, id);
+
+    Course.courseSelection(st);
+    Course.gradeEntry(st);
+
+    st.setRegistered(true);
+    students.put(id, st);
+    SaveCSV.saveToCSV();
+
+    System.out.println("Student Recorded!");
+}
+
+
+    static void editStudent() {
+
+    System.out.print("Student ID: ");
+    String id = sc.nextLine();
+
+    Student s = students.get(id);
+    if (s == null) {
+        System.out.println("Student not found!");
+        return;
+    }
+
+    String n;
+    while (true) {
+        System.out.print("New Name (empty = keep): ");
+        n = sc.nextLine();
+
+        if (n.isEmpty()) {
+            n = s.getName();
+            break;
+        }
+        if (!n.matches("\\p{L}+")) {
+            System.out.println("Only letters allowed!");
+            continue;
+        }
+        break;
+    }
+
+    String sur;
+    while (true) {
+        System.out.print("New Surname (empty = keep): ");
+        sur = sc.nextLine();
+
+        if (sur.isEmpty()) {
+            sur = s.getSurname();
+            break;
+        }
+        if (!sur.matches("\\p{L}+")) {
+            System.out.println("Only letters allowed!");
+            continue;
+        }
+        break;
+    }
+
+    s.setName(n);
+    s.setSurname(sur);
+
+    s.getDailyCourses().clear();
+    s.getGrades().clear();
+
+    Course.courseSelection(s);
+    Course.gradeEntry(s);
+
+    SaveCSV.saveToCSV();
+    System.out.println("Student updated!");
+}
+
 
     static void deleteStudent(){
         System.out.print("ID to be deleted");

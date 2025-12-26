@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -33,10 +34,13 @@ public class SaveCSV {
 
                     if(c != null){
                         sb.append(",")
-                          .append(c.getCourseName())
-                          .append(" (")
-                          .append(inst)
-                          .append(")");
+                        .append(c.getCourseName())
+                        .append(" (")
+                        .append(inst)
+                        .append(", ")
+                        .append(c.getTimeSlot())
+                        .append(")");
+
                     } else {
                         sb.append(",");
                     }
@@ -77,5 +81,4 @@ public class SaveCSV {
         }
     
 }
-
 

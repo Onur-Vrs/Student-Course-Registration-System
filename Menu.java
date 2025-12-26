@@ -5,8 +5,11 @@ public class Menu {
     static Scanner sc = new Scanner(System.in);
 
     static void printMenu(){
-        while (true) { 
-            
+        SaveCSV.loadFromCSV();
+        SaveCSV.saveToCSV();
+        
+        while (true) {
+
         System.out.println("\n====STUDENT MENU====");
         System.out.println("1.Add Student");
         System.out.println("2.Edit Student");
