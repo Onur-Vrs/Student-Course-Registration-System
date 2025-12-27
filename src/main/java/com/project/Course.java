@@ -14,6 +14,9 @@ public class Course {
     static Scanner sc = new Scanner(System.in);
     static String [] days={"Monday","Tuesday","Wednesday","Thursday","Friday"};
 
+/**
+* Creates a Course object using the course name, code, credit value, instructors, and time slot.
+*/
     public Course(String courseName, String courseNumber, int credit, List<String> instructors, String timeSlot) {
         this.courseName = courseName;
         this.courseNumber = courseNumber;
@@ -22,16 +25,25 @@ public class Course {
         this.timeSlot = timeSlot;
     }
 
+/**
+* Returns the course's name, code, credit, instructors and time slot.
+*/
     public String getCourseName() { return courseName; }
     public String getCourseNumber() { return courseNumber; }
     public int getCredit() { return credit; }
     public List<String> getInstructors() { return instructors; }
     public String getTimeSlot() { return timeSlot; }
 
+/**
+* Checks if the course has an instructor with the given name.
+*/
     public boolean hasInstructor(String name){
         return instructors.contains(name);
     }
     
+/**
+* Reads an integer from the user input and retries until a valid number is entered.
+*/
     private static int readInt(){
         while(true){
             try{
@@ -42,6 +54,9 @@ public class Course {
         }
     }
 
+/**
+* Allows a student to select courses and instructors for each day, handling conflicts and input validation.
+*/
     static void courseSelection(Student s) {
 
     for (String day : days) {
@@ -94,7 +109,9 @@ public class Course {
     }
 }
 
-
+/**
+ * Prompts the user to enter grades for each of the student's courses, ensuring valid input between 0 and 100.
+ */
     static void gradeEntry(Student s) {
 
     for (Course c : s.getDailyCourses().values()) {

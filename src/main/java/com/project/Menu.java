@@ -5,7 +5,11 @@ import java.util.Scanner;
 public class Menu {
     static Scanner sc = new Scanner(System.in);
 
+/**
+* Displays the student menu, handles user input, and performs actions like add, edit, delete, or list students.
+*/
     static void printMenu(){
+
         SaveCSV.loadFromCSV();
         SaveCSV.saveToCSV();
         
@@ -35,13 +39,16 @@ public class Menu {
     }
 }
 
-static int readInt(){
-    while (true) {
-        try {
-            return Integer.parseInt(sc.nextLine());
-        } catch (Exception e) {
-            System.out.print("Enter Number: ");
-        } 
+/**
+* Reads an integer from user input, repeatedly prompting until a valid number is entered.
+*/
+    static int readInt(){
+        while (true) {
+            try {
+                return Integer.parseInt(sc.nextLine());
+            } catch (Exception e) {
+                System.out.print("Enter Number: ");
+            } 
     }
 }
 

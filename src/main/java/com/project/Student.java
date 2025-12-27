@@ -19,11 +19,17 @@ public class Student implements Registrable {
     static Scanner sc = new Scanner(System.in);
     static Map<String, Student> students = new HashMap<>();
 
+/**
+* Static initializer to load student data from CSV when the class is first loaded.
+*/
     static {
         SaveCSV.loadFromCSV();
         students = SaveCSV.students;
     }
 
+/**
+* Creates a Student object with the given name, surname, and a 9-digit ID.
+*/
     public Student(String name,String surname,String id){
         if(!id.matches("\\d{9}"))
             throw new IllegalArgumentException("ID must be 9 digits!");
@@ -33,25 +39,24 @@ public class Student implements Registrable {
         this.id=id;
     }
 
+/**
+* Returns the student's name, surname, ID, grades, and dailyCourses.
+*/
     public String getName(){ return name; }
     public String getSurname(){ return surname; }
     public String getId(){ return id; }
-    public Map<Course, Double> getGrades() {
-    return grades;
-}
-
-    public void setName(String name) {
-    this.name = name;
-}
-
-public void setSurname(String surname) {
-    this.surname = surname;
-}
-
-
-
+    public Map<Course, Double> getGrades() { return grades; }
     public Map<String, Course> getDailyCourses(){ return dailyCourses; }
 
+/**
+* Sets the student's first name and Surname.
+*/
+    public void setName(String name) { this.name = name;}
+    public void setSurname(String surname) { this.surname = surname; }
+    
+/**
+* Assigns a course to a specific day if there is no time conflict.
+*/
     public boolean setCourse(String day, Course c){
         Course existing = dailyCourses.get(day);
         if(existing != null && existing.getTimeSlot().equals(c.getTimeSlot()))
@@ -60,12 +65,18 @@ public void setSurname(String surname) {
         return true;
     }
 
+/**
+* Removes the course, its instructor, and associated grade for the specified day.
+*/
     public void removeCourse(String day){
         Course c = dailyCourses.remove(day);
         instructors.remove(day);
         if(c != null) grades.remove(c);
-        }
+    }
 
+/**
+* Assigns an instructor to a course on a given day if the instructor is valid.
+*/
     public boolean setInstructor(String day,String name){
        Course c = dailyCourses.get(day);
        if(c==null) return false;
@@ -73,16 +84,26 @@ public void setSurname(String surname) {
        instructors.put(day, name);
        return true;
     }
-
+/**
+* Returns the assigned instructor for the given day, or "No" if none is set.
+*/
     public String getInstructor(String day){
         return instructors.getOrDefault(day, "No");
     }
-    
+
+/**
+* Sets the grade for a course if the student is enrolled in it.
+*/ 
     public void setGrade(Course c, double grade){
         if(dailyCourses.containsValue(c))
             grades.put(c,grade);
     }
 
+
+/**
+* Adds a new student by collecting personal info, selecting courses and instructors, 
+* entering grades, and saving the record.
+*/
     static void addStudent() {
 
     String n;
@@ -151,7 +172,7 @@ public void setSurname(String surname) {
     SaveCSV.saveToCSV();
 
     System.out.println("Student Recorded!");
-}
+    }
 
 
     static void editStudent() {
@@ -210,17 +231,23 @@ public void setSurname(String surname) {
     System.out.println("Student updated!");
 }
 
-
+/**
+* Deletes a student by ID from the records and saves the updated data.
+*/
     static void deleteStudent(){
-        System.out.print("ID to be deleted");
-        Student removed = students.remove(sc.nextLine());
+        System.out.print("ID to be deleted: ");
+        Student removed = students.remove(sc.nextLine().trim());
         if(removed==null){
             System.out.println("ID not found!");
         } else {
             System.out.println("ID deleted!");
         }
+        SaveCSV.saveToCSV();
     }
 
+/**
+* Lists all students with their name, ID, type, and GPA.
+*/
     static void listStudents(){
         if(students.isEmpty()){
             System.out.println("No records found!");
@@ -237,6 +264,9 @@ public void setSurname(String surname) {
         }
     }
 
+/**
+* Calculates the student's GPA based on course credits and grades.
+*/
     public double calculateGPA(){
         double total =0;
         int credits = 0;
@@ -248,6 +278,9 @@ public void setSurname(String surname) {
         return credits == 0?0: total/ credits;
     }
 
+/**
+* Returns the total number of credits the student is enrolled in.
+*/
     public int getTotalCredit(){
         int sum = 0;
         for(Course c : dailyCourses.values())
@@ -255,9 +288,27 @@ public void setSurname(String surname) {
         return sum;
     }
 
+/**
+* Calculates tuition based on total enrolled credits.
+*/
     public int calculateTuition(){ return getTotalCredit()*1000; }
+    
+
+/**
+* Returns the student type; "No" for regular students.
+*/
     public String getStudentType() {return "No"; }
+
+
+/**
+* Returns whether the student is registered.
+*/
     @Override public boolean isRegistered(){ return registered; }
+
+
+/**
+* Sets the student's registration status.
+*/
     @Override public void setRegistered(boolean r){ registered = r; }
 
 }

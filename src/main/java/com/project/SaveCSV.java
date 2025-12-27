@@ -15,6 +15,9 @@ public class SaveCSV {
     static Map<String, Student> students =new HashMap<>();
     static File file = new File("Students.csv");
 
+/**
+* Saves all student data to a CSV file including personal info, courses, instructors, and GPA.
+*/
     static void saveToCSV(){
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(file))){
             bw.write("Name,Surname,ID,Graduate,Tuition,"+"Monday,Tuesday,Wednesday,Thursday,Friday,GPA");
@@ -58,28 +61,32 @@ public class SaveCSV {
         }
     }
     
-        static void loadFromCSV(){
-            if(!file.exists()) return;
 
-            try(BufferedReader br = new BufferedReader(new FileReader(file))){
-                br.readLine();
-                String line;
+/**
+* Loads student data from a CSV file and initializes student objects in memory.
+*/
+    static void loadFromCSV(){
+        if(!file.exists()) return;
 
-                while((line = br.readLine())!= null){
-                    String [] p = line.split(",");
-                    if(p.length<3) continue;
+        try(BufferedReader br = new BufferedReader(new FileReader(file))){
+            br.readLine();
+            String line;
 
-                    Student s = p[3].equals("Yes")
-                        ? new GraduateStudent(p[0], p[1], p[2])
-                        : new Student(p[0], p[1], p[2]);
+            while((line = br.readLine())!= null){
+                String [] p = line.split(",");
+                if(p.length<3) continue;
 
-                s.setRegistered(true);
-                students.put(p[2], s);
-                }
-            } catch(IOException e){
-                e.printStackTrace();
+                Student s = p[3].equals("Yes")
+                    ? new GraduateStudent(p[0], p[1], p[2])
+                    : new Student(p[0], p[1], p[2]);
+
+            s.setRegistered(true);
+            students.put(p[2], s);
             }
+        } catch(IOException e){
+            e.printStackTrace();
         }
+    }
     
 }
 
