@@ -1,3 +1,5 @@
+package com.project;
+
 public class GraduateStudent extends Student {
 
     public GraduateStudent(String name, String surname, String id){
